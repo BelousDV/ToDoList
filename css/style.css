@@ -1,0 +1,108 @@
+body{
+    background-color: grey;
+}
+.wrapper{
+    margin: 10px auto;
+    min-width: 960px;
+    min-height: 500px;
+}
+.header{
+    background-color: #fff;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid black;
+}
+.login{
+    background-color: yellow;
+}
+.login__wrapper{
+    margin: 10px auto;
+    width: 500px;
+    height: 100px;
+}
+.task{
+    max-width: 800px;
+    margin: 0px auto;
+    padding: 20px;
+}
+.task_search{
+    width: 30%;
+    line-height: 18px;
+}
+.task_search,
+.task_status,
+.task_priority{
+    font-size: 14px;
+    border: 1px solid black;
+    padding: 2px 5px 2px 5px;
+    margin-left: 5px;
+}
+.task_create{
+    margin-left: 5px;
+}
+
+.show_blank{
+    display: none;
+    width: 300px;
+    border: 1px solid black;
+    padding: 15px;
+    position: absolute;
+    left: 35%;
+    top: 25%;
+}
+.btn{
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 3px 25px 3px 25px;
+}
+.show_item.btn{
+    margin: 5px 0px;
+    border: 1px solid black;
+}
+.show_item{
+    width: 100%;
+}
+.task_text{
+    min-height: 80px;
+}
+.task_priority.show_item{
+    margin-bottom: 70px;
+}
+
+.show_block{
+    width: 100px;
+    padding: 10px; 
+    margin: 5px 10px; 
+    background-color: red;
+    border: 1px solid black;
+    
+}
+.done_task{
+    width: 100px;
+    padding: 10px; 
+    margin: 5px 10px; 
+    background-color: yellow;
+    border: 1px solid black;
+   
+}
+
+.show_wrapper{
+    display: flex;
+    justify-content: start;
+}
+.unFinished-tasks,
+.finished-tasks{
+   
+    display: flex;
+    justify-content: start;
+}
+.done{
+    display: none;
+}
+
+
+
+
