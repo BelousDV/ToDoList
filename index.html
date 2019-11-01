@@ -28,17 +28,23 @@
 		    </div>
 		</section>-->
 		<section id="user_task" class="task">
+			<div class="task_search-wrap">
 			<input type="search" id="search" class="task_search" placeholder="search by title">
-		    <select id="status" name="status" size="1" class="task_status">
-		    	<option value="all">all</option>
+			<input type="button" id="search-btn" class="task_search-btn">
+			</div>
+			
+		    <select id="status" name="status" size="1" class="task_status" placeholder="search by title">
+		    	<option value="all" selected>all</option>
 		    	<option value="open">open</option>
-		    	<option value="done">done</option>
+				<option value="done">done</option>
+				
 		    </select>
 		     <select id="priority" name="priority" size="1" class="task_priority">
-		    	<option value="all">all</option>
+		    	<option value="all" selected>all</option>
 		    	<option value="hight">hight</option>
 		    	<option value="normal">normal</option>
-		    	<option value="low">low</option>
+				<option value="low">low</option>
+				
 		    </select>
 
 		    <input type="button" id="create" value="Create" class="task_create btn">

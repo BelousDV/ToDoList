@@ -3,63 +3,93 @@ import DataTask from './create.js';
 //console.log(DataTask);
 //import './create.js';
 
+var inputSearchButton = document.getElementById("search-btn");
 var inputSearch = document.getElementById("search");
 var taskStatus = document.getElementById("status");
 var taskPriority = document.getElementById("priority");
 var unFinishedBlokTask = document.getElementById("unFinished");
 var finishedBlokTask = document.getElementById("finished");
-/*
-var DataTask = [];
 
-function loadItems() { 
-	return JSON.parse(localStorage.getItem('todo'));
-}
-var data = loadItems();
-
-for(let i=0; i<data.taskList.length; ){
- let itemTask = data.taskList[i];
- if(itemTask == null){
-    DataTask.splice(i, 1);
-    i++;
-  }else{
-    DataTask.push(itemTask);
-   // showTaskList(itemTask, i);
-    console.log(DataTask);
-    let localValue = localStorage.getItem('todo');
-    console.log(localValue);
-    i++;
-  };
-}*/
 
 console.log(DataTask);
-inputSearch.onchange = function searchTasksTitle(){
+inputSearchButton.onclick = function searchTasksTitle(){
 	alert("Search");
+	taskStatus.value = 'all';
+	taskPriority.value = 'all';
 	let input = inputSearch.value;
 	//console.log(priorityElem);
+	let statusSearch = false;
 	
 	for(let j = 0; j<=DataTask.length-1; j++){
 		let titleData = DataTask[j]; 
 		let titleTask;
 		let showItemTask = document.getElementById(j);
-		//if(priorityElem == 'all'){
-			//showItemTask.className = "show";
-		//	showItemTask.style.display = "block";
+
 		if(titleData['title'] == input){
-			//alert(titleData['title']);
 			showItemTask.style.display = "block";
-			//taskStatus.value = titleData['status'];
-			//taskPriority.value = titleData['priority'];
+			statusSearch = true;
 		}else{
 			showItemTask.style.display = "none";
 		}
 	}
+	if(!statusSearch){
+		alert("not found"); 
+		//taskStatus.value = 'all';
+		//taskPriority.value = 'all';
+		//searchTasksStatus();
+	} 
 	inputSearch.value = "";
+	//searchTasksStatus();
 }
 
-taskStatus.onchange = function searchTasksStatus(){
-	//alert("status");
+//export default DataTask;
+
+
+function searchTasksStatus(){
+	alert("status");
 	let statusElem = taskStatus.value;
+	let priorityElem = taskPriority.value;
+	
 	console.log(statusElem);
+	console.log(priorityElem);
+	switch(statusElem){
+		case 'done':
+			statusElem = true;
+			alert(statusElem);
+			break;
+		case 'open':
+			statusElem = false;
+			alert(statusElem);
+			break;
+		default:
+			statusElem = 'all';
+			//priorityElem = 'all';
+			alert(statusElem);
+			alert(priorityElem);
+	}
+	console.log(statusElem);
+	for(let j = 0; j<=DataTask.length-1; j++){
+		let statusData = DataTask[j]; 
+		console.log(statusData['priority']);
+		console.log(statusData['status']);
+		let showItemTask;
+		showItemTask = document.getElementById(j);
+		if(statusElem == 'all' && priorityElem == 'all'){
+			//showItemTask.className = "show";
+			showItemTask.style.display = "block";
+			console.log(showItemTask);
+		}else if(statusData['status'] == statusElem && statusData['priority'] == priorityElem || 
+		statusData['status'] == statusElem && priorityElem == 'all' ||
+		statusElem == 'all' && statusData['priority'] == priorityElem){
+			//alert(priorityData['priority']);
+			showItemTask.style.display = "block";
+			console.log(showItemTask);
+		}else{
+			showItemTask.style.display = "none";
+			console.log(showItemTask);
+		}
+	}
+	/*let statusElem = taskStatus.value;
 	if(statusElem == 'open'){
 		finishedBlokTask.className = "done";
 		unFinishedBlokTask.className = "unFinished-tasks";
@@ -68,14 +98,17 @@ taskStatus.onchange = function searchTasksStatus(){
 		finishedBlokTask.className = "finished-tasks";
 		unFinishedBlokTask.className = "done";
 		statusElem = true;
-	}else{
+	}else if(statusElem == 'all'){
 		finishedBlokTask.className = "finished-tasks";
 		unFinishedBlokTask.className = "unFinished-tasks";
-	}
+	}*/
+	//searchTasksPriority();
 }
+taskStatus.onchange = searchTasksStatus;
+taskPriority.onchange = searchTasksStatus;
 
-taskPriority.onchange = function searchTasksStatus(){
-	//alert("priority");
+function searchTasksPriority(){
+	alert("priority");
 	let priorityElem = taskPriority.value;
 	//console.log(priorityElem);
 	
@@ -93,11 +126,9 @@ taskPriority.onchange = function searchTasksStatus(){
 			showItemTask.style.display = "none";
 		}
 	}
-
+	//searchTasksStatus();
 }
-
-//export default DataTask;
-
+//taskPriority.onchange = searchTasksPriority;
 
 
 

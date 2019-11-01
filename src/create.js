@@ -89,9 +89,9 @@ function showTaskList(itemTask, idItem){
     itemPriorityBlock.className = "show_block-priority";
     itemPriorityBlock.id = "change-priority";
     itemPriorityBlock.innerText = itemTask["priority"];
-    itemPriorityBlock.setAttribute('data-action', 'checkkk');
 
   let menuItemTask = document.createElement("div");
+  menuItemTask.className = "show_block-wrappermenu" 
 
   let itemChangeMenu = document.createElement("span");
     itemChangeMenu.setAttribute('data-action', 'show');
@@ -99,7 +99,8 @@ function showTaskList(itemTask, idItem){
     itemChangeMenu.innerText = "...";
 
   let menuItem = document.createElement("ul");
-    menuItem.hidden = true;
+      menuItem.hidden = true;
+    
     menuItem.className = "menu_wrapper";
         
   let menuItemDone = document.createElement("li");
@@ -114,22 +115,45 @@ function showTaskList(itemTask, idItem){
     menuItemDelete.innerText = "delete";
     menuItemDelete.setAttribute('data-action', 'delete');
 
+  let menuClose = document.createElement("li");
+  menuClose.innerText = "close";
+  menuClose.setAttribute('data-action', 'close');
+
     itemChangeMenu.appendChild(menuItem);
     menuItem.appendChild(menuItemDone);
     menuItem.appendChild(menuItemEdit);
     menuItem.appendChild(menuItemDelete);
+    menuItem.appendChild(menuClose);
 
+  let itemUnfinishWrap = document.createElement("div");
+  itemUnfinishWrap.id = "check";
+  if(itemTask["status"] == true){
+    itemUnfinishWrap.innerHTML = "<p>Is this task is not completed?</p>";
+  }else{
+    itemUnfinishWrap.innerHTML = "<p>Is this task completed?</p>";
+  }
+  
+  let itemUnfinishButton = document.createElement("button");  
+  itemUnfinishButton.value = "cancel";
+  itemUnfinishButton.innerHTML="No";
+  let itemFinishButton = document.createElement("button");  
+  itemFinishButton.value = "ok";
+  itemFinishButton.innerHTML="Yes";
+ 
   let itemUnfinish = document.createElement("input");
     itemUnfinish.type = "checkbox";
     itemUnfinish.checked = itemTask["status"];
-    itemUnfinish.className = "task_check-status";
+  
     if(itemTask["status"]){
-    itemUnfinish.className = "task_check-done";
-    itemUnfinish.style.display = "inline-block";
-    }else{
+    itemUnfinishWrap.className = "done";
     itemUnfinish.className = "task_check-status";
-    itemUnfinish.style.display = "none";
+    }else{
+    itemUnfinishWrap.className = "done";
+    itemUnfinish.className = "done";
     };
+   
+    itemUnfinishWrap.appendChild(itemUnfinishButton);
+    itemUnfinishWrap.appendChild(itemFinishButton);
   
     menuItemTask.appendChild(itemPriorityBlock);
     menuItemTask.appendChild(itemChangeMenu);
@@ -137,14 +161,15 @@ function showTaskList(itemTask, idItem){
   itemBlock.appendChild(itemTitleBlock);
   itemBlock.appendChild(itemTextBlock);
   itemBlock.appendChild(menuItemTask);
+  itemBlock.appendChild(itemUnfinishWrap);
   itemBlock.appendChild(itemUnfinish);
   if(itemTask["status"] == true){
-    //finishedBlokTask.prepend(itemBlock);
-    finishedBlokTask.prepend(itemBlock);
-   //showBlokTask.appendChild(itemBlock);
+  //  finishedBlokTask.prepend(itemBlock);
+  showBlokTask.append(itemBlock);
+  
   }else{
-    unFinishedBlokTask.prepend(itemBlock);
-    //showBlokTask.prepend(itemBlock);
+    showBlokTask.prepend(itemBlock);
+    //unFinishedBlokTask.prepend(itemBlock);
   }
   new Menu(itemBlock);
 }
@@ -154,10 +179,11 @@ class Menu {
       this._elem = elem;
       elem.onclick = this.onClick.bind(this); // (*)
     }
-
-    checkkk(x) {
-       
-      }
+    
+    close (x){
+      let showMenu = x.querySelector('ul');
+        showMenu.hidden = true;
+    }
 
     show(x) {
         console.log(x.querySelector('ul'));
@@ -167,13 +193,26 @@ class Menu {
 
     done(x) {
       let idTask = x.id;
-      console.log(idTask);
+     
+      let checkboxWrap = x.querySelector('#check');
+      checkboxWrap.className = "show_checkbox";
+      //console.log(checkboxWrap);
       let checkbox = x.querySelector('input');
-      checkbox.style.display = "inline-block";
-      checkbox.onclick = function (){
+      let button = x.querySelectorAll('button');
+      let okButton = button[1];
+      let cancelButton = button[0];
+      
+     cancelButton.onclick = function(){
+      checkboxWrap.className = "done";
+      let showMenu = x.querySelector('ul');
+      showMenu.hidden = true;
+     };
+      
+     okButton.onclick = function (){
         let itemTask = DataTask[idTask];
         console.log(itemTask);
-        itemTask["status"] = checkbox.checked;
+        (!checkbox.checked)?itemTask["status"] = true: itemTask["status"]= false;
+        //itemTask["status"] = true;
         alert(itemTask["status"]);
         DataTask[idTask] = itemTask;
         x.remove();
@@ -239,7 +278,7 @@ class Menu {
       if (action) {
         this[action](this._elem);
       }
-    };
+    }
   }
 
 function saveItems(){
