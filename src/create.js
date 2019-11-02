@@ -118,7 +118,7 @@ function showTaskList(itemTask, idItem){
   let itemChangeMenu = document.createElement("span");
     itemChangeMenu.setAttribute('data-action', 'show');
     itemChangeMenu.className = "show_block-menu";
-    itemChangeMenu.innerText = "...";
+    itemChangeMenu.innerText = "menu";
 
   let menuItem = document.createElement("ul");
       menuItem.hidden = true;
@@ -311,8 +311,6 @@ function saveItems(){
   try {
     localStorage.setItem('todo', JSON.stringify({ 
       taskList: DataTask}));
-      let localValue = localStorage.getItem('todo');
-      alert(localValue);
   } catch (e) {
     if (e == QUOTA_EXCEEDED_ERR) {
      alert('localStorage limit exceeded in your browser :)');
