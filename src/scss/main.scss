@@ -1,4 +1,225 @@
-.wrapper{
-    background-color: red;
+$center: 0 auto;
+$border: 1px solid black;
+
+%visible-flex{
     display: flex;
+    justify-content: space-between;
 }
+*{
+    font-size: 16px;
+    font-family: Comic Sans MS, Comic Sans, cursive;
+}
+/* General page structure */
+body{
+    background-color: #b8b5b5;
+    .wrapper{
+        max-width: 1200px;
+        margin: 10px auto;
+        min-width: 960px;
+        min-height: 500px;
+        .header{
+            background-color: #fff;
+            margin: $center;
+            display: flex;
+            justify-content: center;
+            border-bottom: $border;
+        }
+        .task{
+            max-width: 800px;
+            margin: $center;
+            padding: 20px;
+            @extend %visible-flex;
+        }
+        .show_blank{
+            display: none;
+            width: 350px;
+            border: $border;
+            padding: 15px;
+            position: fixed;
+            left: 35%;
+            top: 25%;
+            z-index: 1100;
+            background-color: rgba(#afafa2, .95);
+        }
+        .show_wrapper{
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 100%;
+        }
+    }
+}
+/* Header on the page */
+.header{
+    .header__text{
+        text-transform: uppercase;
+        font-size: 24px;
+    }
+}
+/* Main menu on the page */
+.task_search-wrap{
+    border: $border;
+    padding: 0;
+    width: 40%;
+    @extend %visible-flex;
+    .task_search{
+        padding: 2px 5px 2px 5px;
+        width: 90%;
+    }
+    .task_search-btn{
+        width: 32px;
+        height: 32px;
+        background-image: url(/src/img/search.png);
+        border: none;
+    }
+}
+.task_status,
+.task_priority{
+    border: $border;
+    padding: 2px 5px 2px 5px;
+    margin-left: 5px;
+    width: 20%;
+}
+
+/*--Block for Creating a new Tasks--*/
+.show_item{
+    width: 98%;
+}
+.show_blank{
+    input,
+    textarea{
+        border: $border;
+        padding: 3px;
+        margin-top: 5px;
+    }
+    textarea{
+        min-height: 100px;
+    }
+}
+.show_item.btn{
+    margin: 5px 0px;
+    border: $border;
+}
+.btn{
+    font-weight: 600;
+    border: $border;
+    border-radius: 5px;
+    padding: 3px 25px 3px 25px;
+    &:hover{
+        box-shadow: 2px 2px 2px #333;
+    }
+}
+/*--Block for show Tasks--*/
+.show_block{
+    width: 27%;
+    max-width: 500px;
+    min-height: 200px;
+    padding: 10px; 
+    margin: 5px 10px; 
+    background-color: #d6dce0;
+    border: $border;
+    position: relative;
+    .task_item-title{
+        font-weight: 700;
+        margin: 10px auto;
+        padding: 5px; 
+        text-decoration: underline;
+    }
+    .task_item-text{
+        margin: 20px auto;
+        padding: 5px; 
+    }
+}
+.done_task{
+    background-color: #c4d2ff;
+    box-shadow: 5px 5px 5px #4164;
+    border: 2px solid black;
+    color: #807c7c;
+}
+
+
+.task_check-status{
+    position: absolute;
+    top:2%;
+    left: 85%;
+    content: " ";
+    background-image: url(/src/img/tick.png);
+    width: 32px;
+    height: 32px;
+}
+
+
+/*--Edit menu for Tasks--*/
+.show_block-wrappermenu{
+    margin-top: 70px;
+    vertical-align: bottom;
+    @extend %visible-flex;
+    .show_block-priority{
+        padding: 5px;
+        border: 1px solid #333;
+        border-radius: 5px;
+        background-color:  #bcd2eb;
+        font-weight: 600;
+        text-transform: uppercase;
+        line-height: 24px;
+        cursor: default;
+    }
+    .show_block-menu{
+        font-size: 22px;
+        padding: 5px;
+        border: 1px dashed #333;
+        border-radius: 5px;
+        background-color: #d3d3d3;
+        cursor: pointer;
+        &:hover{
+            box-shadow: 2px 2px 2px black;
+        }
+    }
+    
+}
+
+ul.menu_wrapper{
+    list-style: none;
+    width: 250px;
+    position: absolute;
+    right:15%;
+    top:30%;
+    li{
+        text-align: center;
+        line-height: 30px;
+        width: 100%;
+        border: $border;
+        cursor: pointer;
+        background-color: #c2bfbf;
+        text-transform: uppercase;
+        &:hover{
+            background-color: #cac2c2;
+            color:grey;
+        }
+    }
+}
+.show_checkbox{
+    text-align: center;
+    color: #fff;
+    width: 200px;
+    padding: 0px 5px 10px 5px;
+    background-color: grey;
+    border: $border;
+    box-shadow: 2px 2px 2px black;
+    position: absolute;
+    top:50%;
+    left:30%;
+    p{
+        font-size: 18px;
+        font-weight: 500;
+    }
+    button{
+        margin-left: 20px;
+        border: $border;
+    }
+}
+.done{
+    display: none;
+}
+
+
+

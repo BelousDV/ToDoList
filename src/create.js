@@ -80,22 +80,20 @@ function showTaskList(itemTask, idItem){
   let itemBlock = document.createElement("div");
     itemBlock.id = idItem;
     if(itemTask["status"] == true){
-      itemBlock.className = "done_task";
+      itemBlock.className = ("show_block"+" "+"done_task");
     }else{
       itemBlock.className = "show_block";
     }
-    
-  let itemTitleBlock = document.createElement("textarea");
+  let itemTitleBlock = document.createElement("div");
     itemTitleBlock.className = "task_item-title";
-    itemTitleBlock.setAttribute('disabled', 'disabled');
     itemTitleBlock.innerText = itemTask["title"];
-    itemTitleBlock.setAttribute('data-action', 'show'); 
-    
-  let itemTextBlock = document.createElement("textarea");
+    itemTitleBlock.setAttribute('data-action', 'show');
+
+  let itemTextBlock = document.createElement("div");
     itemTextBlock.className = "task_item-text";
     itemTextBlock.innerText = itemTask["task"];
-    itemTextBlock.setAttribute('disabled', 'disabled');
     itemTextBlock.setAttribute('data-action', 'show');
+  
 
   let itemPriorityBlock = document.createElement("span");
     itemPriorityBlock.className = "show_block-priority";
@@ -152,17 +150,19 @@ function showTaskList(itemTask, idItem){
   let itemUnfinish = document.createElement("input");
     itemUnfinish.type = "checkbox";
     itemUnfinish.checked = itemTask["status"];
-    itemUnfinish.setAttribute('disabled', 'disabled');
+    itemUnfinish.className = "done";
+  let itemfinish = document.createElement("span");
+    
   
     if(itemTask["status"]){
     itemUnfinishWrap.className = "done";
-    itemUnfinish.className = "task_check-status";
+    itemfinish.className = "task_check-status";
     menuItem.append(menuItemDone);
     menuItem.append(menuItemDelete);
     menuItem.append(menuClose);
     }else{
     itemUnfinishWrap.className = "done";
-    itemUnfinish.className = "done";
+    itemfinish.className = "done";
     menuItem.append(menuItemDone);
     menuItem.append(menuItemEdit);
     menuItem.append(menuItemDelete);
@@ -180,6 +180,7 @@ function showTaskList(itemTask, idItem){
   itemBlock.append(menuItemTask);
   itemBlock.append(itemUnfinishWrap);
   itemBlock.append(itemUnfinish);
+  itemBlock.append(itemfinish);
   if(itemTask["status"] == true){
     showBlokTask.append(itemBlock);
   }else{
