@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="vieport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="dist/main.css">
 	<!--<script src="./dist/main.js"></script>-->
 	<!--<script src="src/index.js"></script>-->
 	
@@ -19,14 +19,6 @@
 		    </div>
 		</header>
 
-	<!--	<section class="login">
-		    <div class="login__wrapper">
-				<input id="user_name" type="text" class="user__name">
-				<input id="user_pass" type="password" class="user__password">
-				<button id="login" class="login__login-btn">Login</button>
-				<button id="signin" class="login__sigin-btn">SignIn</button>
-		    </div>
-		</section>-->
 		<section id="user_task" class="task">
 			<div class="task_search-wrap">
 			<input type="search" id="search" class="task_search" placeholder="search by title">
@@ -50,11 +42,11 @@
 		    <input type="button" id="create" value="Create" class="task_create btn">
 
 		</section>
-		<div id="blank" class="show_blank">
+		<form id="blank" class="show_blank" action="">
 			<label class="show_item" for="task_title">Title:</label>
-			<input type="text" id="task_title" class="task_title show_item">
+			<input type="text" name="title" id="task_title" class="task_title show_item" required>
 			<label class="show_item" for="task_text">Description:</label>
-			<textarea id="task_text" class="task_text show_item"></textarea>
+			<textarea type="text" id="task_text" name="description" class="task_text show_item" required></textarea>
 			<label class="show_item" for="task_priority">Priority:</label>
 		     <select name="priority" id="task_priority" size="1" class="task_priority show_item">
 		    	<option value="hight">hight</option>
@@ -62,12 +54,11 @@
 		    	<option value="low">low</option>
 			</select>
 			<input type="button" id="cancel" value="cancel" class="create_cancel show_item btn">
-			<input type="button" id="save" value="save" class="create_save show_item btn">
-			<input type="button" id="change" value="save edit" class="create_save show_item btn">
-		</div>
+			<input type="submit" id="save" value="save" class="create_save show_item btn">
+			<input type="submit" id="change" value="save edit" class="create_save show_item btn">
+		</form>
 		<div id="show_wrapper" class="show_wrapper">
-			<div id="unFinished" class="unFinished-tasks"></div>
-			<div id="finished" class="finished-tasks"></div>
+			
 		</div>
 		
 	</div>

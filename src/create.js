@@ -38,36 +38,42 @@ function cancelblank(){
     inputPriority.value = 'normal';
     createTaskBlank.style.display = 'none';
 }
-function saveBlank(){
+function saveBlank(e){
+  event.preventDefault(e);
     let taskTitle;
     let taskText;
     let taskPriority;
     let itemTask;
  
-    taskTitle = inputTitle.value;
-    taskText = inputText.value;
-    taskPriority = inputPriority.value;
-    console.log(taskTitle+ " " +taskText+ " " +taskPriority);
-    
-    itemTask = {
-        "title": taskTitle,
-        "task": taskText,
-        "priority": taskPriority,
-        "status": false
-    };
-    DataTask.push(itemTask);
-    let idItem;
-    for(let i=0; i<=DataTask.length; i++){
-        idItem = i-1;
+    if(inputTitle.value == ""){
+      alert("Please enter the Task Title");
+    }else{
+      taskTitle = inputTitle.value;
+      taskText = inputText.value;
+      taskPriority = inputPriority.value;
+      //console.log(taskTitle+ " " +taskText+ " " +taskPriority);
+      
+      itemTask = {
+          "title": taskTitle,
+          "task": taskText,
+          "priority": taskPriority,
+          "status": false
+      };
+      DataTask.push(itemTask);
+      let idItem;
+      for(let i=0; i<=DataTask.length; i++){
+          idItem = i-1;
+      }
+      showTaskList(itemTask, idItem);
+      createTaskBlank.style.display = 'none';
+      inputTitle.value = '';
+      inputText.value = '';
+      inputPriority.value = 'normal';
+      
+      saveItems();
+      
     }
-    showTaskList(itemTask, idItem);
-    createTaskBlank.style.display = 'none';
-    inputTitle.value = '';
-    inputText.value = '';
-    inputPriority.value = 'normal';
     
-    saveItems();
-    //return DataTask;
 }
 
 function showTaskList(itemTask, idItem){
@@ -78,17 +84,24 @@ function showTaskList(itemTask, idItem){
     }else{
       itemBlock.className = "show_block";
     }
-     
-  let itemTitleBlock = document.createElement("p");
-    itemTitleBlock.innerText = itemTask["title"]; 
-
-  let itemTextBlock = document.createElement("p");
-    itemTextBlock.innerText = itemTask["task"]; 
+    
+  let itemTitleBlock = document.createElement("textarea");
+    itemTitleBlock.className = "task_item-title";
+    itemTitleBlock.setAttribute('disabled', 'disabled');
+    itemTitleBlock.innerText = itemTask["title"];
+    itemTitleBlock.setAttribute('data-action', 'show'); 
+    
+  let itemTextBlock = document.createElement("textarea");
+    itemTextBlock.className = "task_item-text";
+    itemTextBlock.innerText = itemTask["task"];
+    itemTextBlock.setAttribute('disabled', 'disabled');
+    itemTextBlock.setAttribute('data-action', 'show');
 
   let itemPriorityBlock = document.createElement("span");
     itemPriorityBlock.className = "show_block-priority";
     itemPriorityBlock.id = "change-priority";
     itemPriorityBlock.innerText = itemTask["priority"];
+    itemPriorityBlock.setAttribute('data-action', 'show');
 
   let menuItemTask = document.createElement("div");
   menuItemTask.className = "show_block-wrappermenu" 
@@ -119,11 +132,7 @@ function showTaskList(itemTask, idItem){
   menuClose.innerText = "close";
   menuClose.setAttribute('data-action', 'close');
 
-    itemChangeMenu.appendChild(menuItem);
-    menuItem.appendChild(menuItemDone);
-    menuItem.appendChild(menuItemEdit);
-    menuItem.appendChild(menuItemDelete);
-    menuItem.appendChild(menuClose);
+  itemChangeMenu.appendChild(menuItem);
 
   let itemUnfinishWrap = document.createElement("div");
   itemUnfinishWrap.id = "check";
@@ -143,35 +152,41 @@ function showTaskList(itemTask, idItem){
   let itemUnfinish = document.createElement("input");
     itemUnfinish.type = "checkbox";
     itemUnfinish.checked = itemTask["status"];
+    itemUnfinish.setAttribute('disabled', 'disabled');
   
     if(itemTask["status"]){
     itemUnfinishWrap.className = "done";
     itemUnfinish.className = "task_check-status";
+    menuItem.append(menuItemDone);
+    menuItem.append(menuItemDelete);
+    menuItem.append(menuClose);
     }else{
     itemUnfinishWrap.className = "done";
     itemUnfinish.className = "done";
+    menuItem.append(menuItemDone);
+    menuItem.append(menuItemEdit);
+    menuItem.append(menuItemDelete);
+    menuItem.append(menuClose);
     };
    
-    itemUnfinishWrap.appendChild(itemUnfinishButton);
-    itemUnfinishWrap.appendChild(itemFinishButton);
+    itemUnfinishWrap.append(itemUnfinishButton);
+    itemUnfinishWrap.append(itemFinishButton);
   
-    menuItemTask.appendChild(itemPriorityBlock);
-    menuItemTask.appendChild(itemChangeMenu);
+    menuItemTask.append(itemPriorityBlock);
+    menuItemTask.append(itemChangeMenu);
 
-  itemBlock.appendChild(itemTitleBlock);
-  itemBlock.appendChild(itemTextBlock);
-  itemBlock.appendChild(menuItemTask);
-  itemBlock.appendChild(itemUnfinishWrap);
-  itemBlock.appendChild(itemUnfinish);
+  itemBlock.append(itemTitleBlock);
+  itemBlock.append(itemTextBlock);
+  itemBlock.append(menuItemTask);
+  itemBlock.append(itemUnfinishWrap);
+  itemBlock.append(itemUnfinish);
   if(itemTask["status"] == true){
-  //  finishedBlokTask.prepend(itemBlock);
-  showBlokTask.append(itemBlock);
-  
+    showBlokTask.append(itemBlock);
   }else{
     showBlokTask.prepend(itemBlock);
-    //unFinishedBlokTask.prepend(itemBlock);
   }
   new Menu(itemBlock);
+
 }
 
 class Menu {
@@ -247,9 +262,6 @@ class Menu {
           "status": false
         };
           DataTask[idTask] = itemTask;
-          console.log(DataTask[idTask]);
-          console.log(DataTask);
-          console.log(idTask);
 
           saveTaskBlank.style.display = "inline-block";
           createTaskBlank.style.display = "none";
@@ -269,7 +281,6 @@ class Menu {
       let idTask = x.id;
       delete DataTask[idTask];
       saveItems();
-      console.log(DataTask);
       x.remove();
     }
 
@@ -307,17 +318,14 @@ for(let i=0; i<data.taskList.length; ){
   }else{
     DataTask.push(itemTask);
     showTaskList(itemTask, i);
-    console.log(DataTask);
+    
     let localValue = localStorage.getItem('todo');
-    console.log(localValue);
+   
     i++;
   };
 }
 
 
-
-//export var DataTask = DataTask;
-//export var show = showTaskList(); 
 export default DataTask;
 
 

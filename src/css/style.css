@@ -115,12 +115,33 @@ body{
 }
 
 .task_item-title{
+    display: block;
+    width: 90%;
     font-weight: 700;
-    text-decoration: underline;
+    border:1px solid black;
+    outline: none;
+    overflow: hidden;
+    /*min-height: 40px;*/
+    padding: 5px; 
+    font-size: 14px;
+    resize: none; 
+    margin: 10px auto;
 }
 .task_item-text{
+    display: table-cell;
+    width: 90%;
     padding: 5px;
+    border:1px solid black;
+    outline: none;
+    overflow: hidden;
+    min-height: 150px;
+    
+    margin: 10px auto;
+    font-size: 14px;
+    resize: none; 
+    display: block;
 }
+
 
 .show_wrapper{
     display: flex;
@@ -168,10 +189,10 @@ body{
 
 ul.menu_wrapper{
     list-style: none;
-    width: 150px;
+    width: 250px;
     position: absolute;
-    right:16%;
-    top:40%;
+    right:15%;
+    top:30%;
     z-index: 1000;
 }
 ul.menu_wrapper li{
@@ -182,6 +203,7 @@ ul.menu_wrapper li{
     border:1px solid black;
     cursor: pointer;
     background-color: #c2bfbf;
+    text-transform: uppercase;
 }
 ul.menu_wrapper li:hover{
     background-color: #cac2c2;
@@ -210,10 +232,13 @@ ul.menu_wrapper li:hover{
 }
 .done_task .task_check-status{
     position: absolute;
-    top:5%;
-    left: 80%;
-    width: 25px;
-    height: 25px;
+    top:2%;
+    left: 85%;
+    width: 30px;
+    height: 30px;
+}
+.done_task textarea{
+    border: none;
 }
 
 
