@@ -1,10 +1,18 @@
 //load data from the localStorage and pass the data to render the page
 import {showTaskList} from './create.js';
+
 var DataTasks = [];
+
 /*create a function for parse data*/
-function loadItems() { 
-	return JSON.parse(localStorage.getItem('todo'));
+if(!localStorage.getItem('todo')){
+  localStorage.setItem('todo', JSON.stringify({ 
+  taskList: DataTasks}));
+};
+
+function loadItems() {
+  return JSON.parse(localStorage.getItem('todo'));
 }
+
 var data = loadItems();
 
 for(let i=0; i<data.taskList.length; ){

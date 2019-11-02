@@ -306,13 +306,22 @@ function saveItems(){
       DataTask.splice(i, 1);
     };
   }
-	localStorage.clear('todo');
-  localStorage.setItem('todo', JSON.stringify({ 
-  taskList: DataTask}));
-  let localValue = localStorage.getItem('todo');
+  localStorage.clear('todo');
+
+  try {
+    localStorage.setItem('todo', JSON.stringify({ 
+      taskList: DataTask}));
+      let localValue = localStorage.getItem('todo');
+      alert(localValue);
+  } catch (e) {
+    if (e == QUOTA_EXCEEDED_ERR) {
+     alert('localStorage limit exceeded in your browser :)');
+    }
+  }
 }
 /*call the function to display data*/
 export {showTaskList};
+
 
 
 
