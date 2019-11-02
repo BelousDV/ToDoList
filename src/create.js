@@ -1,5 +1,4 @@
-//import DataTask from './search.js';
-
+import DataTask from './load.js';
 //Button variable
 var newTask = document.getElementById("create");
 var createTaskBlank = document.getElementById("blank");
@@ -12,8 +11,6 @@ var inputTitle = document.getElementById('task_title');
 var inputText = document.getElementById('task_text');
 var inputPriority = document.getElementById('task_priority');
 
-//Object for data
-var DataTask = [];
 
 //Page variable
 var showBlokTask = document.getElementById("show_wrapper");
@@ -26,18 +23,23 @@ cencelTaskBlank.addEventListener('click', cancelblank);
 saveTaskBlank.addEventListener('click', saveBlank);
 
 //Button function
+/*create a function to display the task creation form*/
 function showBlank(){
    inputTitle.value = '';
     inputText.value = '';
     inputPriority.value = 'normal';
     createTaskBlank.style.display = 'block';
 }
+
+/*create a function to cancel the display of the task creation form*/
 function cancelblank(){
     inputTitle.value = '';
     inputText.value = '';
     inputPriority.value = 'normal';
     createTaskBlank.style.display = 'none';
 }
+
+/*create a function to save the entered data when creating and updating a task*/
 function saveBlank(e){
   event.preventDefault(e);
     let taskTitle;
@@ -51,8 +53,7 @@ function saveBlank(e){
       taskTitle = inputTitle.value;
       taskText = inputText.value;
       taskPriority = inputPriority.value;
-      //console.log(taskTitle+ " " +taskText+ " " +taskPriority);
-      
+     
       itemTask = {
           "title": taskTitle,
           "task": taskText,
@@ -75,32 +76,42 @@ function saveBlank(e){
     }
     
 }
-
+/*create a function to display the list of tasks on the html-page,
+the function takes the value of each object (itemTask) from the position data (idItem) in array. 
+And for each object it displays an element with the corresponding values.
+*/
 function showTaskList(itemTask, idItem){
+          /*create a general block for Task with id == cells in the data object*/
   let itemBlock = document.createElement("div");
     itemBlock.id = idItem;
+          /*we read data on the status of the task from the object (itemTask),
+          in accordance with the status (completed or not) we assign the name class*/
     if(itemTask["status"] == true){
       itemBlock.className = ("show_block"+" "+"done_task");
     }else{
       itemBlock.className = "show_block";
     }
+
+          /*create an element that displays the title for Task*/   
   let itemTitleBlock = document.createElement("div");
     itemTitleBlock.className = "task_item-title";
     itemTitleBlock.innerText = itemTask["title"];
     itemTitleBlock.setAttribute('data-action', 'show');
 
+          /*create an element that displays the description for Task*/   
   let itemTextBlock = document.createElement("div");
     itemTextBlock.className = "task_item-text";
     itemTextBlock.innerText = itemTask["task"];
     itemTextBlock.setAttribute('data-action', 'show');
   
-
+          /*create an element that displays the priority for Task*/  
   let itemPriorityBlock = document.createElement("span");
     itemPriorityBlock.className = "show_block-priority";
     itemPriorityBlock.id = "change-priority";
     itemPriorityBlock.innerText = itemTask["priority"];
     itemPriorityBlock.setAttribute('data-action', 'show');
 
+          /*below we create the elements of the editing menu for the task*/
   let menuItemTask = document.createElement("div");
   menuItemTask.className = "show_block-wrappermenu" 
 
@@ -113,25 +124,26 @@ function showTaskList(itemTask, idItem){
       menuItem.hidden = true;
     
     menuItem.className = "menu_wrapper";
-        
+          /*done task menu button */        
   let menuItemDone = document.createElement("li");
     menuItemDone.innerText = "done";
     menuItemDone.setAttribute('data-action', 'done');
-
+          /*edit task menu button */    
   let menuItemEdit = document.createElement("li");
     menuItemEdit.innerText = "edit";
     menuItemEdit.setAttribute('data-action', 'edit');
-
+          /*delete task menu button */  
   let menuItemDelete = document.createElement("li");
     menuItemDelete.innerText = "delete";
     menuItemDelete.setAttribute('data-action', 'delete');
-
+          /*close task menu button */  
   let menuClose = document.createElement("li");
   menuClose.innerText = "close";
   menuClose.setAttribute('data-action', 'close');
 
   itemChangeMenu.appendChild(menuItem);
 
+          /*ask the user to confirm the change*/
   let itemUnfinishWrap = document.createElement("div");
   itemUnfinishWrap.id = "check";
   if(itemTask["status"] == true){
@@ -153,7 +165,7 @@ function showTaskList(itemTask, idItem){
     itemUnfinish.className = "done";
   let itemfinish = document.createElement("span");
     
-  
+          /*create a menu in accordance with the status of the task*/  
     if(itemTask["status"]){
     itemUnfinishWrap.className = "done";
     itemfinish.className = "task_check-status";
@@ -168,7 +180,7 @@ function showTaskList(itemTask, idItem){
     menuItem.append(menuItemDelete);
     menuItem.append(menuClose);
     };
-   
+          /*insert all elements to the HTML markup*/ 
     itemUnfinishWrap.append(itemUnfinishButton);
     itemUnfinishWrap.append(itemFinishButton);
   
@@ -189,7 +201,7 @@ function showTaskList(itemTask, idItem){
   new Menu(itemBlock);
 
 }
-
+/*ccreate a class for action handlers in the menu for each task*/
 class Menu {
     constructor(elem) {
       this._elem = elem;
@@ -202,17 +214,14 @@ class Menu {
     }
 
     show(x) {
-        console.log(x.querySelector('ul'));
         let showMenu = x.querySelector('ul');
         (showMenu.hidden == true)? showMenu.hidden = false: showMenu.hidden = true;
       }
 
     done(x) {
       let idTask = x.id;
-     
       let checkboxWrap = x.querySelector('#check');
       checkboxWrap.className = "show_checkbox";
-      //console.log(checkboxWrap);
       let checkbox = x.querySelector('input');
       let button = x.querySelectorAll('button');
       let okButton = button[1];
@@ -226,16 +235,14 @@ class Menu {
       
      okButton.onclick = function (){
         let itemTask = DataTask[idTask];
-        console.log(itemTask);
+        
         (!checkbox.checked)?itemTask["status"] = true: itemTask["status"]= false;
-        //itemTask["status"] = true;
-        alert(itemTask["status"]);
+        
         DataTask[idTask] = itemTask;
         x.remove();
         showTaskList(itemTask, idTask);
         saveItems();
       }
-      console.log(checkbox);
     }
 
     edit(x) {
@@ -292,7 +299,7 @@ class Menu {
       }
     }
   }
-
+/*create a function to save task data in localStorage*/
 function saveItems(){
   for(let i=0; i<=DataTask.length; i++){
     if(DataTask[i] == null){
@@ -303,31 +310,10 @@ function saveItems(){
   localStorage.setItem('todo', JSON.stringify({ 
   taskList: DataTask}));
   let localValue = localStorage.getItem('todo');
-  console.log(localValue);
 }
+/*call the function to display data*/
+export {showTaskList};
 
-function loadItems() { 
-	return JSON.parse(localStorage.getItem('todo'));
-}
-var data = loadItems();
-
-for(let i=0; i<data.taskList.length; ){
- let itemTask = data.taskList[i];
- if(itemTask == null){
-    DataTask.splice(i, 1);
-    i++;
-  }else{
-    DataTask.push(itemTask);
-    showTaskList(itemTask, i);
-    
-    let localValue = localStorage.getItem('todo');
-   
-    i++;
-  };
-}
-
-
-export default DataTask;
 
 
  
