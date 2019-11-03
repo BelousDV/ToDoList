@@ -4,8 +4,9 @@ TestTask<br>
 <p>To create a task, use the create button. When creating, you can enter the name of the task, its description, and also indicate the priority of importance.</p>
 <p>To edit, delete or execute for each task, use the menu button. The list of tasks can be sorted by name, priority and status.</p>
 <p>To store data is used browser <strong>localStorage</strong>.</p>
+<br/>
 <a href="https://belousdv.github.io/">On this link you will see the application https://belousdv.github.io</a>
-<br>
+
 <p>Project development involves the use of npm, Webpack 4, NodeJS, webpack-dev-server, webpack-cli, css-loader, postcss-loader, sass-loader, style-loader, autoprefixer, css-nano.</p>
 <p>The assembly of project data is in the file <strong>package.json</strong> and <strong>package-lock.json</strong>, the configuration of the project modules is in the <strong>webpack.config.js and src / postcss.config.js</strong> files. 
 You can build a new environment by copying these files to a new directory, install NodeJS and run the command line:</p>
